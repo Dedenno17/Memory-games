@@ -21,15 +21,8 @@
     text-shadow: 1px 1px 7px rgba(0,0,0,1);
 }
 
-.title{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 80%;
-    height: 30%;
-}
 
-.title .title-img{
+.title-img{
     width: 20%;
     height: 100%;
 }
@@ -39,7 +32,7 @@
     height: 100%;
 }
 
-.title h1{
+.opening-container h1{
     font-size: 6rem;
 }
 
