@@ -1,0 +1,13 @@
+{
+    "Title" : "Memory Games",
+    "ImageBg" : "assets/bg-nature.jpg",
+    "ImageTitle" : "assets/lamp.png",
+    "ImageBgMain" : "assets/bg-nature.jpg",
+    "BackCard" : "assets/back.jpg",
+    "FrontCard" : ["assets/cat.png", "assets/dog.png", "assets/fox.png", "assets/bee.png", "assets/frog.png", "assets/monkey.png", "assets/pig.png", "assets/wolf.png"],
+    "SoundBg" : "assets/jungle-ost.mp3",
+    "SoundClick" : "assets/click-sound.wav",
+    "SoundCard" : "assets/card-move.mp3",
+    "SoundRight" : "assets/right-answer.wav",
+    "SoundCount" : "assets/count.wav"
+}
