@@ -13,7 +13,23 @@ function makeOpening(el) {
                 </div>
                 <h1>${el.Title}</h1>
                 <button>Start Game</button>
+                <audio autoplay loop src="${el.SoundBg}">
             </div>`;
+}
+
+//show element opening and play the music
+async function showOpening() {
+    
+    // add elemet to body
+    const body = document.querySelector('body');
+    let openingData = await requestData();
+    let element = makeOpening(openingData); 
+    body.innerHTML = element;
+
+    // play background music
+    const sound = document.querySelector('audio');
+    sound.play();
+    sound.volume = 0.3;
 }
 
 
@@ -23,15 +39,9 @@ function makeOpening(el) {
 // load game
 window.addEventListener('load', async () => {
 
-    // add opening section
-    const body = document.querySelector('body');
+    //add element to body
+    showOpening();
 
-    let openingData = await requestData();
-    let elemen = makeOpening(openingData);
-    
-    body.innerHTML = elemen;
 
-    console.log(elemen);
-    
 
 })
