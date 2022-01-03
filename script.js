@@ -13,7 +13,8 @@ function makeOpening(el) {
                 </div>
                 <h1>${el.Title}</h1>
                 <button>Start Game</button>
-                <audio autoplay loop src="${el.SoundBg}">
+                <audio class="bg-sound" autoplay loop src="${el.SoundBg}">
+                <audio class="click-sound" src="${el.SoundClick}">
             </div>`;
 }
 
@@ -27,9 +28,15 @@ async function showOpening() {
     body.innerHTML = element;
 
     // play background music
-    const sound = document.querySelector('audio');
+    const sound = document.querySelector('.bg-sound');
     sound.play();
     sound.volume = 0.3;
+
+    const startGameBtn = document.querySelector('button');
+    startGameBtn.addEventListener('click', ()=> {
+        const soundClick = document.querySelector('.click-sound');
+        soundClick.play();
+    })
 }
 
 
@@ -42,6 +49,5 @@ window.addEventListener('load', async () => {
     //add element to body
     showOpening();
 
-
-
+    // 
 })
