@@ -13,7 +13,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
     background: url('assets/grass-op.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -24,26 +23,28 @@
 
 .title-img{
     width: 20%;
-    height: 100%;
+    height: 35%;
+    margin: 50px 0 20px 0;
 }
 
-.title-img img{
+.title-img img {
     width: 100%;
     height: 100%;
 }
 
 .opening-container h1{
-    font-size: 6rem;
+    font-size: 7rem;
+    margin-bottom: 140px;
 }
 
 .opening-container button{
+    padding: 20px 80px;
+    background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+    color: #fff;
     border: none;
     outline: none;
-    font-size: 2rem;
-    padding: 30px 80px;
-    border-radius: 20px;
-    background: linear-gradient(to right, #fdc830, #f37335);;
-    color: #fff;
+    border-radius: 10px;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
