@@ -1,4 +1,6 @@
 const body = document.querySelector('body');
+const compareCard = [];
+
 
 // request data 
 function requestData() {
@@ -7,6 +9,17 @@ function requestData() {
             .then(response => response);
 }
 
+
+
+
+// Rules of the Game
+function rules(arr) {
+    if( arr[0].dataset.name == arr[1].dataset.name ){
+        arr.forEach((c) => c.classList.add('flip'));
+    }else{
+        arr.forEach((c) => c.classList.remove('flip'));
+    }
+}
 
 
 
@@ -69,9 +82,9 @@ function makeMain(el) {
                 </div>
                 <audio class="bg-sound" autoplay loop src="${el.SoundBg}">
                 <audio class="click-sound" src="${el.SoundClick}">
-                <audio class="click-sound" src="${el.SoundCard}">
-                <audio class="click-sound" src="${el.SoundRight}">
-                <audio class="click-sound" src="${el.SoundCount}">
+                <audio class="click-card" src="${el.SoundCard}">
+                <audio class="click-right" src="${el.SoundRight}">
+                <audio class="click-count" src="${el.SoundCount}">
             </div>`;
 }
 
@@ -112,7 +125,24 @@ async function showMain() {
     
 }
 
+// event when card clicked
+window.addEventListener('click', (e) => {
+    if( e.target.className == 'card' ){
+        // const soundCard = document.querySelector('.click-card');
+        // soundCard.play();
+        
+        e.target.classList.add('flip');
+        const card = e.target;
+        compareCard.push(card);
 
+        if(compareCard.length == 2){
+            rules(compareCard);
+            // compareCard.splice(0,3);
+        }   
+
+        console.log(compareCard);
+    }
+})
 
 
 
