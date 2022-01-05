@@ -110,7 +110,9 @@ async function showMain() {
     const gameContainer = document.querySelector('.game-container');
     addCardToElement(mainData, gameContainer);
     
-} 
+}
+
+
 
 
 
