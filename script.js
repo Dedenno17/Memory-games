@@ -1,5 +1,6 @@
 const body = document.querySelector('body');
 const compareCard = [];
+let cardOpen = 0;
 
 
 // request data 
@@ -15,7 +16,7 @@ function requestData() {
 // Rules of the Game
 function rules(arr) {
     if( arr[0].dataset.name == arr[1].dataset.name ){
-        arr.forEach((c) => c.classList.add('flip'));
+        arr.forEach((c) => c.classList.add('open'));
     }else{
         arr.forEach((c) => c.classList.remove('flip'));
     }
@@ -125,6 +126,13 @@ async function showMain() {
     
 }
 
+
+
+
+
+
+
+
 // event when card clicked
 window.addEventListener('click', (e) => {
     if( e.target.className == 'card' ){
@@ -132,22 +140,21 @@ window.addEventListener('click', (e) => {
         // soundCard.play();
         
         e.target.classList.add('flip');
-        const card = e.target;
-        compareCard.push(card);
+        cardOpen++;
+        compareCard.push(e.target)
 
-        if(compareCard.length == 2){
-            rules(compareCard);
-            // compareCard.splice(0,3);
-        }   
+        if(cardOpen == 2){
+            setTimeout(function(){
+                rules(compareCard);
+                cardOpen = 0;
+                compareCard.splice(0,3);
+                console.log(compareCard);
+            }, 750)
+        }
 
-        console.log(compareCard);
+        console.log(cardOpen);
     }
 })
-
-
-
-
-
 
 
 // load game
