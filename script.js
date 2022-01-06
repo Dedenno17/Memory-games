@@ -23,7 +23,10 @@ function rules(arr) {
         // add score
         pScore += 10;
         const score = document.querySelector('.score span');
+        const soundRight = document.querySelector('audio .click-right');
+
         score.innerHTML = pScore;
+        soundRight.play();
 
     }else{
         arr.forEach((c) => c.classList.remove('flip'));
@@ -38,11 +41,16 @@ function countdown(parent) {
     const inter = setInterval(() => {
         parent.innerHTML = timeLimit;
         timeLimit--;
+
+        const soundCount = document.querySelector('audio .click-count');
+        soundCount.play();
+        soundCard.volume = 0.5;
     }, 1000);
 
     setTimeout(()=> {
         clearInterval(inter);
     },(timeLimit + 1) * 1000);
+
 }
 
 
@@ -99,14 +107,10 @@ function makeMain(el) {
                 <div class="time">
                     <h1>Time Limit</h1>
                     <span class="limit"></span>
-                    <button>
-                        <i class="fas fa-pause"></i>
-                        <span>Pause</span>
-                    </button>
                 </div>
                 <audio class="bg-sound" autoplay loop src="${el.SoundBg}">
                 <audio class="click-sound" src="${el.SoundClick}">
-                <audio class="click-card" src="${el.SoundCard}">
+                <audio class="click-card" autoplay src="${el.SoundCard}">
                 <audio class="click-right" src="${el.SoundRight}">
                 <audio class="click-count" src="${el.SoundCount}">
             </div>`;
@@ -152,6 +156,7 @@ async function showMain() {
     const limitTime = document.querySelector('.time .limit');
     limitTime.innerHTML = timeLimit;
     countdown(limitTime);
+
 }
 
 
@@ -161,17 +166,19 @@ async function showMain() {
 
 
 
-// event when card clicked
+// event handler
 window.addEventListener('click', (e) => {
+    
+    // event when card has clicked
     if( e.target.className == 'card' ){
-        // const soundCard = document.querySelector('.click-card');
-        // soundCard.play();
+        const soundCard = document.querySelector('.click-card');
+        soundCard.play();
         
         e.target.classList.add('flip');
         cardOpen++;
         compareCard.push(e.target)
 
-        if(cardOpen == 2){
+        if(cardOpen >= 2){
             setTimeout(function(){
                 rules(compareCard);
                 cardOpen = 0;
@@ -181,6 +188,7 @@ window.addEventListener('click', (e) => {
 
     }
 })
+
 
 
 // load game
