@@ -1,6 +1,8 @@
 const body = document.querySelector('body');
 const compareCard = [];
 let cardOpen = 0;
+let pScore = 0;
+let timeLimit = 30;
 
 
 // request data 
@@ -17,9 +19,30 @@ function requestData() {
 function rules(arr) {
     if( arr[0].dataset.name == arr[1].dataset.name ){
         arr.forEach((c) => c.classList.add('open'));
+        
+        // add score
+        pScore += 10;
+        const score = document.querySelector('.score span');
+        score.innerHTML = pScore;
+
     }else{
         arr.forEach((c) => c.classList.remove('flip'));
     }
+}
+
+
+
+
+// countdown
+function countdown(parent) {
+    const inter = setInterval(() => {
+        parent.innerHTML = timeLimit;
+        timeLimit--;
+    }, 1000);
+
+    setTimeout(()=> {
+        clearInterval(inter);
+    },(timeLimit + 1) * 1000);
 }
 
 
@@ -75,7 +98,7 @@ function makeMain(el) {
                 <div class="game-container"></div>
                 <div class="time">
                     <h1>Time Limit</h1>
-                    <span class="limit">0</span>
+                    <span class="limit"></span>
                     <button>
                         <i class="fas fa-pause"></i>
                         <span>Pause</span>
@@ -123,7 +146,12 @@ async function showMain() {
     // put all cards in to game container
     const gameContainer = document.querySelector('.game-container');
     addCardToElement(mainData, gameContainer);
-    
+
+
+    // countdown
+    const limitTime = document.querySelector('.time .limit');
+    limitTime.innerHTML = timeLimit;
+    countdown(limitTime);
 }
 
 
@@ -148,11 +176,9 @@ window.addEventListener('click', (e) => {
                 rules(compareCard);
                 cardOpen = 0;
                 compareCard.splice(0,3);
-                console.log(compareCard);
-            }, 750)
+            }, 800)
         }
 
-        console.log(cardOpen);
     }
 })
 
