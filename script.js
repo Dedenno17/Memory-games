@@ -38,17 +38,32 @@ function rules(arr) {
 
 // countdown
 function countdown(parent) {
+    const modal = document.querySelector('.modal-remember');
+    const blackBg = document.querySelector('.black');
     const inter = setInterval(() => {
         parent.innerHTML = timeLimit;
         timeLimit--;
 
-        const soundCount = document.querySelector('audio .click-count');
-        soundCount.pause();
-        soundCard.volume = 0.5;
+        // const soundCount = document.querySelector('audio .click-count');
+        // soundCount.pause();
+        // soundCard.volume = 0.5;
+
+        if( pScore == 80 ){
+            clearInterval(inter);
+            clearTimeout(time);
+            modal.innerHTML = `Selamat anda sudah mencocokan Semua Kartu, Anda mendapatkan nilai Sempurna ${pScore}!!`;
+            modal.classList.add('show');
+            blackBg.classList.add('show');
+        }
     }, 1000);
 
-    setTimeout(()=> {
+    
+    // announce score when time has reached the limit
+    const time = setTimeout(()=> {
         clearInterval(inter);
+        modal.innerHTML = `Waktu anda habis!! anda sudah mencocokan ${pScore / 10} Pasang Kartu, Anda mendapatkan score ${pScore}!!`;
+        modal.classList.add('show');
+        blackBg.classList.add('show');
     },(timeLimit + 1) * 1000);
 
 }
@@ -94,8 +109,6 @@ async function showOpening() {
 
 
 
-
-
 // make element of main game
 function makeMain(el) {
     return `<div class="main-container">
@@ -116,7 +129,7 @@ function makeMain(el) {
             </div>
             <div class="black"></div>
             <div class="modal-remember">
-                <p>Waktu Anda 10 detik untuk mengingat urutan tempat kartu!!</p>
+                <p></p>
             </div>`;
 }
 
@@ -155,6 +168,7 @@ async function showMain() {
     setTimeout(() => {
         const modal = document.querySelector('.modal-remember');
         const blackBg = document.querySelector('.black');
+        modal.innerHTML = `Waktu anda 10 detik untuk mengingat tempat kartu yang benar!!`;
         modal.classList.add('show');
         blackBg.classList.add('show');
 
@@ -172,18 +186,19 @@ async function showMain() {
     const cards = document.querySelectorAll('.card');
     setTimeout(() => {
         cards.forEach(c => c.classList.add('flip'));
+        cards.forEach(c => c.style.pointerEvents = 'none');
         setTimeout(() => {
             // close card
             cards.forEach(c => c.classList.remove('flip'));
-            
+            cards.forEach(c => c.style.pointerEvents = 'visible');
+
             // start countdown
             const limitTime = document.querySelector('.time .limit');
             limitTime.innerHTML = timeLimit;
             countdown(limitTime);
         },10000);
     },6000);
-
-
+    
 }
 
 
