@@ -21,6 +21,14 @@
     background-size: cover;
     color: #b33525;
     text-shadow: 1px 1px 7px rgba(0,0,0,1);
+    opacity: 1;
+    visibility: visible;
+    transition: all .5s ease;
+}
+
+.opening-container.switch{
+    opacity: 0;
+    visibility: hidden;
 }
 
 
@@ -70,6 +78,14 @@
     background: url('assets/bg-nature.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    opacity: 1;
+    visibility: visible;
+    transition: all .5s ease;
+}
+
+.main-container.switch{
+    opacity: 0;
+    visibility: hidden;
 }
 
 .score, .time{
@@ -186,6 +202,28 @@
     visibility: hidden;
 }
 
+.modal-remember button{
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-remember button:active{
+    transform: scale(.98);
+}
+
+.modal-remember button:nth-child(2){
+    background-color: #fda085;
+    margin-right: 100px;
+}
+
+.modal-remember button:last-child{
+    background-color: lightblue;
+}
+
 .black.show{
     opacity: 1;
     visibility: visible;
@@ -196,3 +234,4 @@
     top: 30%;
     visibility: visible;
 }
+

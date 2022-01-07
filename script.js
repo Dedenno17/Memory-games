@@ -26,7 +26,7 @@ function rules(arr) {
         const soundRight = document.querySelector('audio .click-right');
 
         score.innerHTML = pScore;
-        soundRight.pause();
+        soundRight.play();
 
     }else{
         arr.forEach((c) => c.classList.remove('flip'));
@@ -44,16 +44,22 @@ function countdown(parent) {
         parent.innerHTML = timeLimit;
         timeLimit--;
 
-        // const soundCount = document.querySelector('audio .click-count');
-        // soundCount.pause();
-        // soundCard.volume = 0.5;
+        const soundCount = document.querySelector('audio .click-count');
+        soundCount.play();
+        soundCard.volume = 0.5;
 
         if( pScore == 80 ){
             clearInterval(inter);
             clearTimeout(time);
-            modal.innerHTML = `Selamat anda sudah mencocokan Semua Kartu, Anda mendapatkan nilai Sempurna ${pScore}!!`;
+            modal.innerHTML = `<p>Selamat anda sudah mencocokan Semua Kartu,<br/> Anda mendapatkan nilai Sempurna ${pScore}!!</p>
+                                <button>Keluar</button>
+                                <button>Main Lagi</button>`;
             modal.classList.add('show');
             blackBg.classList.add('show');
+            
+            //stop the backsound
+            const sound = document.querySelector('.bg-sound');
+            sound.pause();
         }
     }, 1000);
 
@@ -61,9 +67,15 @@ function countdown(parent) {
     // announce score when time has reached the limit
     const time = setTimeout(()=> {
         clearInterval(inter);
-        modal.innerHTML = `Waktu anda habis!! anda sudah mencocokan ${pScore / 10} Pasang Kartu, Anda mendapatkan score ${pScore}!!`;
+        modal.innerHTML = `<p>Waktu anda habis!!<br/>anda sudah mencocokan ${pScore / 10} Pasang Kartu,<br/>Anda mendapatkan score ${pScore}!!</p>
+                            <button>Keluar</button>
+                            <button>Main Lagi</button>`;
         modal.classList.add('show');
         blackBg.classList.add('show');
+
+        //stop the backsound
+        const sound = document.querySelector('.bg-sound');
+        sound.pause();
     },(timeLimit + 1) * 1000);
 
 }
@@ -78,7 +90,7 @@ function makeOpening(el) {
                     <img src="${el.ImageTitle}" alt="background">
                 </div>
                 <h1>${el.Title}</h1>
-                <button>Start Game</button>
+                <button class="startBtn">Start Game</button>
                 <audio class="bg-sound" autoplay loop src="${el.SoundBg}">
                 <audio class="click-sound" src="${el.SoundClick}">
             </div>`;
@@ -98,11 +110,11 @@ async function showOpening() {
     sound.volume = 0.3;
 
     // add click sound
-    const startGameBtn = document.querySelector('button');
-    startGameBtn.addEventListener('click', ()=> {
-        const soundClick = document.querySelector('.click-sound');
-        soundClick.play();
-    })
+    // const startGameBtn = document.querySelector('button');
+    // startGameBtn.addEventListener('click', ()=> {
+    //     const soundClick = document.querySelector('.click-sound');
+    //     soundClick.play();
+    // })
 }
 
 
@@ -130,6 +142,8 @@ function makeMain(el) {
             <div class="black"></div>
             <div class="modal-remember">
                 <p></p>
+                <button>Keluar</button>
+                <button>Main Lagi</button>
             </div>`;
 }
 
@@ -161,9 +175,12 @@ async function showMain() {
 
     // play background music
     const sound = document.querySelector('.bg-sound');
-    sound.pause();
-    sound.volume = 0.3;
-   
+    sound.play();
+    sound.volume = 0.1;
+    setTimeout(() => {
+        sound.volume = 0.5;
+    }, 1000);
+    
     // show time to remember
     setTimeout(() => {
         const modal = document.querySelector('.modal-remember');
@@ -213,7 +230,7 @@ window.addEventListener('click', (e) => {
     
     // event when card has clicked
     if( e.target.className == 'card' ){
-        const soundCard = document.querySelector('.click-card');
+        const soundCard = document.querySelector('.click-sound');
         soundCard.play();
         
         e.target.classList.add('flip');
@@ -221,26 +238,54 @@ window.addEventListener('click', (e) => {
         compareCard.push(e.target)
 
         if(cardOpen >= 2){
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(c => c.style.pointerEvents = 'none');
             setTimeout(function(){
                 rules(compareCard);
                 cardOpen = 0;
                 compareCard.splice(0,3);
+                cards.forEach(c => c.style.pointerEvents = 'visible');
             }, 800)
         }
 
     }
-})
 
+    // when start button was clicked in opening section 
+    if( e.target.className == 'startBtn' ){
+        const soundClick = document.querySelector('.click-sound');
+        const sound = document.querySelector('.bg-sound');
+        sound.volume = 0.1;
+        soundClick.play();
+        e.target.parentElement.classList.add('switch');
+        setTimeout(() => {
+            showMain();
+        }, 450);
+    }
+
+    // when button for out and play again were clicked
+    if( e.target.textContent == 'Keluar'){
+        const soundClick = document.querySelector('.click-sound');
+        soundClick.play();
+        const parent = e.target.parentElement.previousElementSibling.previousElementSibling;
+        parent.classList.add('switch');
+        showOpening();
+    }
+
+    if( e.target.textContent == 'Main Lagi'){
+        const soundClick = document.querySelector('.click-sound');
+        soundClick.play();
+        const parent = e.target.parentElement.previousElementSibling.previousElementSibling;
+        parent.classList.add('switch');
+        showMain();
+    }
+    
+})
 
 
 // load game
 window.addEventListener('load', () => {
-
     //add element to body
-    // showOpening();
-    
-    showMain();
-    
+    showOpening();
 })
 
 
