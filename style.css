@@ -156,3 +156,43 @@
     backface-visibility: hidden;
 }
 
+.black{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.5);
+    transition: all .5s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-remember{
+    position: fixed;
+    padding: 20px;
+    width: 40%;
+    background-color: #b33525;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 2.5rem;
+    text-align: center;
+    top: 10%;
+    left: 50%;
+    opacity: 0;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    transition: all .5s ease;
+    visibility: hidden;
+}
+
+.black.show{
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-remember.show{
+    opacity: 1;
+    top: 30%;
+    visibility: visible;
+}

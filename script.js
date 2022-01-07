@@ -26,7 +26,7 @@ function rules(arr) {
         const soundRight = document.querySelector('audio .click-right');
 
         score.innerHTML = pScore;
-        soundRight.play();
+        soundRight.pause();
 
     }else{
         arr.forEach((c) => c.classList.remove('flip'));
@@ -43,7 +43,7 @@ function countdown(parent) {
         timeLimit--;
 
         const soundCount = document.querySelector('audio .click-count');
-        soundCount.play();
+        soundCount.pause();
         soundCard.volume = 0.5;
     }, 1000);
 
@@ -106,13 +106,17 @@ function makeMain(el) {
                 <div class="game-container"></div>
                 <div class="time">
                     <h1>Time Limit</h1>
-                    <span class="limit"></span>
+                    <span class="limit">0</span>
                 </div>
                 <audio class="bg-sound" autoplay loop src="${el.SoundBg}">
                 <audio class="click-sound" src="${el.SoundClick}">
                 <audio class="click-card" autoplay src="${el.SoundCard}">
                 <audio class="click-right" src="${el.SoundRight}">
                 <audio class="click-count" src="${el.SoundCount}">
+            </div>
+            <div class="black"></div>
+            <div class="modal-remember">
+                <p>Waktu Anda 10 detik untuk mengingat urutan tempat kartu!!</p>
             </div>`;
 }
 
@@ -146,16 +150,39 @@ async function showMain() {
     const sound = document.querySelector('.bg-sound');
     sound.pause();
     sound.volume = 0.3;
+   
+    // show time to remember
+    setTimeout(() => {
+        const modal = document.querySelector('.modal-remember');
+        const blackBg = document.querySelector('.black');
+        modal.classList.add('show');
+        blackBg.classList.add('show');
+
+        setTimeout(() => {
+            modal.classList.remove('show');
+            blackBg.classList.remove('show');
+        }, 5000);
+    }, 300);
 
     // put all cards in to game container
     const gameContainer = document.querySelector('.game-container');
     addCardToElement(mainData, gameContainer);
 
+    // open card for player in 10s and then start the countdown
+    const cards = document.querySelectorAll('.card');
+    setTimeout(() => {
+        cards.forEach(c => c.classList.add('flip'));
+        setTimeout(() => {
+            // close card
+            cards.forEach(c => c.classList.remove('flip'));
+            
+            // start countdown
+            const limitTime = document.querySelector('.time .limit');
+            limitTime.innerHTML = timeLimit;
+            countdown(limitTime);
+        },10000);
+    },6000);
 
-    // countdown
-    const limitTime = document.querySelector('.time .limit');
-    limitTime.innerHTML = timeLimit;
-    countdown(limitTime);
 
 }
 
