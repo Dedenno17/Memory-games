@@ -1,8 +1,8 @@
 const body = document.querySelector('body');
-const compareCard = [];
 let cardOpen = 0;
 let pScore = 0;
-let timeLimit = 30;
+const compareCard = [];
+
 
 
 // request data 
@@ -37,7 +37,7 @@ function rules(arr) {
 
 
 // countdown
-function countdown(parent) {
+function countdown(parent, timeLimit) {
     const modal = document.querySelector('.modal-remember');
     const blackBg = document.querySelector('.black');
     const inter = setInterval(() => {
@@ -167,6 +167,7 @@ function addCardToElement(el, parent) {
 
 // show element main game & play background music
 async function showMain() {
+    let timeLimit = 30;
 
     // add element to body
     let mainData = await requestData();
@@ -212,7 +213,7 @@ async function showMain() {
             // start countdown
             const limitTime = document.querySelector('.time .limit');
             limitTime.innerHTML = timeLimit;
-            countdown(limitTime);
+            countdown(limitTime, timeLimit);
         },10000);
     },6000);
     
@@ -269,6 +270,7 @@ window.addEventListener('click', (e) => {
         const parent = e.target.parentElement.previousElementSibling.previousElementSibling;
         parent.classList.add('switch');
         showOpening();
+        pScore = 0;
     }
 
     if( e.target.textContent == 'Main Lagi'){
@@ -277,6 +279,7 @@ window.addEventListener('click', (e) => {
         const parent = e.target.parentElement.previousElementSibling.previousElementSibling;
         parent.classList.add('switch');
         showMain();
+        pScore = 0;
     }
     
 })
