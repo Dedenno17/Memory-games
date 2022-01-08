@@ -60,6 +60,10 @@ function countdown(parent, timeLimit) {
             //stop the backsound
             const sound = document.querySelector('.bg-sound');
             sound.pause();
+            
+            //play the winning sound
+            const soundWinning = document.querySelector('audio .click-winning');
+            soundWinning.play();
         }
     }, 1000);
 
@@ -76,6 +80,11 @@ function countdown(parent, timeLimit) {
         //stop the backsound
         const sound = document.querySelector('.bg-sound');
         sound.pause();
+
+        // platy the winning sound
+        const soundWinning = document.querySelector('audio .click-winning');
+        soundWinning.play();
+
     },(timeLimit + 1) * 1000);
 
 }
@@ -109,12 +118,6 @@ async function showOpening() {
     sound.play();
     sound.volume = 0.3;
 
-    // add click sound
-    // const startGameBtn = document.querySelector('button');
-    // startGameBtn.addEventListener('click', ()=> {
-    //     const soundClick = document.querySelector('.click-sound');
-    //     soundClick.play();
-    // })
 }
 
 
@@ -138,6 +141,7 @@ function makeMain(el) {
                 <audio class="click-card" autoplay src="${el.SoundCard}">
                 <audio class="click-right" src="${el.SoundRight}">
                 <audio class="click-count" src="${el.SoundCount}">
+                <audio class="click-winning" src="${el.SoundWinning}">
             </div>
             <div class="black"></div>
             <div class="modal-remember">
@@ -231,7 +235,7 @@ window.addEventListener('click', (e) => {
     
     // event when card has clicked
     if( e.target.className == 'card' ){
-        const soundCard = document.querySelector('.click-sound');
+        const soundCard = document.querySelector('.click-card');
         soundCard.play();
         
         e.target.classList.add('flip');
